@@ -4,6 +4,8 @@ library(lubridate)
 library(forecast)
 library(colortools)
 
+#https://github.com/sciencewithsaurav/Exploratory-Data-Analysis/blob/master/All_Cities.xlsx
+
 dataset <- 
   read_excel("D:/Saurav/DS/MachineHack Pollution Visualization Hackathon/All_Cities.xlsx")
 
@@ -17,8 +19,8 @@ avg_NO2 <- mean(dataset$NO2)
 avg_PM10 <- mean(dataset$PM10)
 
 
-#Which state saw the maximum increase in SO2, NO2 and PM10?
-dataset %>% filter(SO2 > 0 & year %in% c("2011","2015")) %>% 
+#Which state saw the maximum increase in SO2 between 2011 & 2015?
+dataset %>% filter(SO2 > 0 & year %in% c("2011","2013","2015")) %>% 
   group_by(State,year) %>% summarize(avg_SO2 = mean(SO2)) %>%
   ggplot(aes(x=reorder(State,avg_SO2),y=avg_SO2, fill=avg_SO2>mean(dataset$SO2))) + 
   geom_bar(stat='identity', position="dodge") + 
